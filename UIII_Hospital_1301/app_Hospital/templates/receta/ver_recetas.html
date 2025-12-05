@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Recetas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Recetas</h1>
+    <a href="{% url 'agregar_receta' %}" class="btn btn-primary mb-3">Agregar Receta</a>
+    <ul class="list-group">
+        {% for receta in recetas %}
+            <li class="list-group-item">
+                <a href="{% url 'actualizar_receta' receta.id %}">{{ receta }}</a>
+                <a href="{% url 'borrar_receta' receta.id %}" class="btn btn-danger btn-sm float-end">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

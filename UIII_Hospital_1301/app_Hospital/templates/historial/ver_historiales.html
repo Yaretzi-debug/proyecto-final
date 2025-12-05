@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Historiales Medicos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Historiales Medicos</h1>
+    <a href="{% url 'agregar_historial' %}" class="btn btn-primary mb-3">Agregar Historial Medico</a>
+    <ul class="list-group">
+        {% for historial in historiales %}
+            <li class="list-group-item">
+                <a href="{% url 'actualizar_historial' historial.id %}">{{ historial }}</a>
+                <a href="{% url 'borrar_historial' historial.id %}" class="btn btn-danger btn-sm float-end">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

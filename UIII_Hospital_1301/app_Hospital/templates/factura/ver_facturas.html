@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Facturas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Facturas</h1>
+    <a href="{% url 'agregar_factura' %}" class="btn btn-primary mb-3">Agregar Factura</a>
+    <ul class="list-group">
+        {% for factura in facturas %}
+            <li class="list-group-item">
+                <a href="{% url 'actualizar_factura' factura.id %}">{{ factura }}</a>
+                <a href="{% url 'borrar_factura' factura.id %}" class="btn btn-danger btn-sm float-end">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

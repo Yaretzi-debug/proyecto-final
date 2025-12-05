@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Gestion Hospitalaria{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Bienvenido al Sistema de Gestion Hospitalaria</h1>
+    <p class="lead">Seleccione una de las siguientes opciones para comenzar:</p>
+    <img src="https://images.pond5.com/health-care-modern-hospital-exterior-footage-068102317_iconl.jpeg">
+    <div class="list-group">
+        <a href="{% url 'ver_pacientes' %}" class="list-group-item list-group-item-action">Gestionar Pacientes</a>
+        <a href="{% url 'ver_doctores' %}" class="list-group-item list-group-item-action">Gestionar Doctores</a>
+        <a href="{% url 'ver_citas' %}" class="list-group-item list-group-item-action">Gestionar Citas</a>
+        <a href="{% url 'ver_historiales' %}" class="list-group-item list-group-item-action">Gestionar Historiales Medicos</a>
+        <a href="{% url 'ver_recetas' %}" class="list-group-item list-group-item-action">Gestionar Recetas</a>
+        <a href="{% url 'ver_facturas' %}" class="list-group-item list-group-item-action">Gestionar Facturas</a>
+    </div>
+</div>
+{% endblock %}

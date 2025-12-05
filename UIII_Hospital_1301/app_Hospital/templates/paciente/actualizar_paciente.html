@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Actualizar Paciente</h2>
+    <form action="{% url 'realizar_actualizacion_paciente' paciente.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ paciente.nombre }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ paciente.apellido }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <select class="form-select" id="genero" name="genero" required>
+                <option value="M" {% if paciente.genero == 'M' %}selected{% endif %}>Masculino</option>
+                <option value="F" {% if paciente.genero == 'F' %}selected{% endif %}>Femenino</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" value="{{ paciente.direccion }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ paciente.telefono }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ paciente.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="tipo_sangre" class="form-label">Tipo de Sangre</label>
+            <input type="text" class="form-control" id="tipo_sangre" name="tipo_sangre" value="{{ paciente.tipo_sangre }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Paciente</button>
+    </form>
+</div>
+{% endblock %}

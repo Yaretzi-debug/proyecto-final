@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrar Factura{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>¿Estas seguro de que quieres eliminar la factura para {{ factura.cita.paciente }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'ver_facturas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">UIII_Hospital_1301</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio_hospital' %}">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPacientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pacientes
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownPacientes">
+                        <li><a class="dropdown-item" href="{% url 'agregar_paciente' %}">Agregar Paciente</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_pacientes' %}">Ver Pacientes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDoctores" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Doctores
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownDoctores">
+                        <li><a class="dropdown-item" href="{% url 'agregar_doctor' %}">Agregar Doctor</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_doctores' %}">Ver Doctores</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCitas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Citas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownCitas">
+                        <li><a class="dropdown-item" href="{% url 'agregar_cita' %}">Agendar Cita</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_citas' %}">Ver Citas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHistorial" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Historial Médico
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownHistorial">
+                        <li><a class="dropdown-item" href="{% url 'agregar_historial' %}">Agregar Historial</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_historiales' %}">Ver Historiales</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRecetas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Recetas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownRecetas">
+                        <li><a class="dropdown-item" href="{% url 'agregar_receta' %}">Agregar Receta</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_recetas' %}">Ver Recetas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFacturas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Facturas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownFacturas">
+                        <li><a class="dropdown-item" href="{% url 'agregar_factura' %}">Agregar Factura</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_facturas' %}">Ver Facturas</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

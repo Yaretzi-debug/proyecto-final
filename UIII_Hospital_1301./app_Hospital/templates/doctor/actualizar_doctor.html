@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Actualizar Doctor</h2>
+    <form action="{% url 'realizar_actualizacion_doctor' doctor.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ doctor.nombre }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ doctor.apellido }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="especialidad" class="form-label">Especialidad</label>
+            <input type="text" class="form-control" id="especialidad" name="especialidad" value="{{ doctor.especialidad }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono" value="{{ doctor.telefono }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ doctor.email }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Doctor</button>
+    </form>
+</div>
+{% endblock %}

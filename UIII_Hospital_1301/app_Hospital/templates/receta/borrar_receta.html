@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrar Receta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Â¿EstÃ¡s seguro de que quieres eliminar la receta para {{ receta.cita.paciente }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'ver_recetas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

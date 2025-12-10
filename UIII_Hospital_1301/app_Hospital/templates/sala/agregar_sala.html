@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Agregar Cita{% endblock %}
+{% block title %}Agregar Sala{% endblock %}
 
 {% block content %}
-<h2>Agregar Nueva Cita</h2>
+<h2>Agregar Nueva Sala</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

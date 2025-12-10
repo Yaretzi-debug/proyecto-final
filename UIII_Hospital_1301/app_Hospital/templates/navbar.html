@@ -37,6 +37,15 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSalas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Salas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownSalas">
+                        <li><a class="dropdown-item" href="{% url 'agregar_sala' %}">Agregar Sala</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_salas' %}">Ver Salas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHistorial" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Historial Médico
                     </a>

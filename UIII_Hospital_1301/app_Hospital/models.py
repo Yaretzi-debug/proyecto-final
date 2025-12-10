@@ -23,11 +23,48 @@ class Doctor(models.Model):
     def __str__(self):
         return f"Dr. {self.nombre} {self.apellido} - {self.especialidad}"
 
+class Sala(models.Model):
+    ESTADO_MANTENIMIENTO_CHOICES = [
+        ('bueno', 'Bueno'),
+        ('regular', 'Regular'),
+        ('malo', 'Malo'),
+    ]
+    nombre = models.CharField(max_length=100)
+    numero_sala = models.CharField(max_length=20, unique=True)
+    area = models.CharField(max_length=100)
+    capacidad = models.PositiveIntegerField()
+    tipo = models.CharField(max_length=100)
+    disponibilidad = models.BooleanField(default=True)
+    ubicacion = models.CharField(max_length=255)
+    descripcion = models.TextField(blank=True, null=True)
+    equipamiento = models.TextField(blank=True, null=True)
+    estado_mantenimiento = models.CharField(max_length=50, choices=ESTADO_MANTENIMIENTO_CHOICES, default='bueno')
+    nivel_seguridad = models.CharField(max_length=100, blank=True, null=True)
+    observaciones = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Sala {self.numero_sala} - {self.nombre} ({self.tipo})"
+
+
 class Cita(models.Model):
+    PRIORIDAD_CHOICES = [
+        ('baja', 'Baja'),
+        ('media', 'Media'),
+        ('alta', 'Alta'),
+    ]
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     fecha_hora = models.DateTimeField()
     motivo = models.TextField()
+    # New fields
+    tipo_cita = models.CharField(max_length=100, default='Consulta General')
+    lugar_cita = models.ForeignKey(Sala, on_delete=models.SET_NULL, null=True, blank=True)
+    duracion_estimada = models.PositiveIntegerField(default=30, help_text="Duración en minutos") # Duration in minutes
+    tipo_servicio = models.CharField(max_length=100, blank=True, null=True)
+    codigo_cita = models.CharField(max_length=20, blank=True, null=True)
+    prioridad = models.CharField(max_length=20, choices=PRIORIDAD_CHOICES, default='media')
+    notas_adicionales = models.TextField(blank=True, null=True)
+
 
     def __str__(self):
         return f"Cita de {self.paciente} con {self.doctor} el {self.fecha_hora}"

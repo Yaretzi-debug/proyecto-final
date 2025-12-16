@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Actualizar Doctor</h2>
-    <form action="{% url 'realizar_actualizacion_doctor' doctor.id %}" method="post">
+    <form action="{% url 'actualizar_doctor' doctor.id %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>

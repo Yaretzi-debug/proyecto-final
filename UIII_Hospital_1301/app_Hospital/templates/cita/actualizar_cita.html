@@ -3,10 +3,73 @@
 {% block title %}Actualizar Cita{% endblock %}
 
 {% block content %}
-<h2>Actualizar Cita</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Actualizar</button>
-</form>
+<div class="container mt-5">
+    <h2>Actualizar Cita</h2>
+    <form method="post" action="{% url 'actualizar_cita' cita.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="paciente" class="form-label">Paciente</label>
+            <select name="paciente" id="paciente" class="form-control" required>
+                {% for paciente in pacientes %}
+                    <option value="{{ paciente.id }}" {% if paciente.id == cita.paciente.id %}selected{% endif %}>{{ paciente.nombre }} {{ paciente.apellido }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="doctor" class="form-label">Doctor</label>
+            <select name="doctor" id="doctor" class="form-control" required>
+                {% for doctor in doctores %}
+                    <option value="{{ doctor.id }}" {% if doctor.id == cita.doctor.id %}selected{% endif %}>{{ doctor.nombre }} {{ doctor.apellido }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="fecha_hora" class="form-label">Fecha y Hora</label>
+            <input type="datetime-local" name="fecha_hora" id="fecha_hora" class="form-control" value="{{ cita.fecha_hora|date:'Y-m-d\TH:i' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <textarea name="motivo" id="motivo" class="form-control" required>{{ cita.motivo }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="tipo_cita" class="form-label">Tipo de Cita</label>
+            <input type="text" name="tipo_cita" id="tipo_cita" class="form-control" value="{{ cita.tipo_cita }}">
+        </div>
+        <div class="mb-3">
+            <label for="lugar_cita" class="form-label">Lugar de la Cita</label>
+            <select name="lugar_cita" id="lugar_cita" class="form-control">
+                <option value="">-- Seleccione un lugar --</option>
+                {% for sala in salas %}
+                    <option value="{{ sala.id }}" {% if sala.id == cita.lugar_cita.id %}selected{% endif %}>{{ sala.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="duracion_estimada" class="form-label">Duración Estimada (minutos)</label>
+            <input type="number" name="duracion_estimada" id="duracion_estimada" class="form-control" value="{{ cita.duracion_estimada }}">
+        </div>
+        <div class="mb-3">
+            <label for="tipo_servicio" class="form-label">Tipo de Servicio</label>
+            <input type="text" name="tipo_servicio" id="tipo_servicio" class="form-control" value="{{ cita.tipo_servicio }}">
+        </div>
+        <div class="mb-3">
+            <label for="codigo_cita" class="form-label">Código de Cita</label>
+            <input type="text" name="codigo_cita" id="codigo_cita" class="form-control" value="{{ cita.codigo_cita }}">
+        </div>
+        <div class="mb-3">
+            <label for="prioridad" class="form-label">Prioridad</label>
+            <select name="prioridad" id="prioridad" class="form-control">
+                <option value="baja" {% if cita.prioridad == 'baja' %}selected{% endif %}>Baja</option>
+                <option value="media" {% if cita.prioridad == 'media' %}selected{% endif %}>Media</option>
+                <option value="alta" {% if cita.prioridad == 'alta' %}selected{% endif %}>Alta</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="notas_adicionales" class="form-label">Notas Adicionales</label>
+            <textarea name="notas_adicionales" id="notas_adicionales" class="form-control">{{ cita.notas_adicionales }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Cita</button>
+        <a href="{% url 'ver_citas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

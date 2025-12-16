@@ -1,7 +1,8 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Paciente, Doctor, Cita, HistorialMedico, Receta, Factura, Sala
 from .forms import HistorialMedicoForm, RecetaForm, FacturaForm, CitaForm, SalaForm
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 
 def inicio_hospital(request):
     return render(request, 'inicio.html')
@@ -27,11 +28,8 @@ def ver_pacientes(request):
     pacientes = Paciente.objects.all()
     return render(request, 'paciente/ver_pacientes.html', {'pacientes': pacientes})
 
+@ensure_csrf_cookie
 def actualizar_paciente(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id=paciente_id)
-    return render(request, 'paciente/actualizar_paciente.html', {'paciente': paciente})
-
-def realizar_actualizacion_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     if request.method == 'POST':
         paciente.nombre = request.POST['nombre']
@@ -72,11 +70,8 @@ def ver_doctores(request):
     doctores = Doctor.objects.all()
     return render(request, 'doctor/ver_doctores.html', {'doctores': doctores})
 
+@ensure_csrf_cookie
 def actualizar_doctor(request, doctor_id):
-    doctor = get_object_or_404(Doctor, id=doctor_id)
-    return render(request, 'doctor/actualizar_doctor.html', {'doctor': doctor})
-
-def realizar_actualizacion_doctor(request, doctor_id):
     doctor = get_object_or_404(Doctor, id=doctor_id)
     if request.method == 'POST':
         doctor.nombre = request.POST['nombre']
@@ -105,27 +100,58 @@ def agregar_cita(request):
             return redirect('ver_citas')
     else:
         form = CitaForm()
+    
     return render(request, 'cita/agregar_cita.html', {'form': form})
 
 def ver_citas(request):
     citas = Cita.objects.all()
     return render(request, 'cita/ver_citas.html', {'citas': citas})
 
+@csrf_protect
 def actualizar_cita(request, cita_id):
     cita = get_object_or_404(Cita, id=cita_id)
-    form = CitaForm(instance=cita)
-    return render(request, 'cita/actualizar_cita.html', {'form': form, 'cita': cita})
 
-def realizar_actualizacion_cita(request, cita_id):
-    cita = get_object_or_404(Cita, id=cita_id)
     if request.method == 'POST':
-        form = CitaForm(request.POST, instance=cita)
-        if form.is_valid():
-            form.save()
-            return redirect('ver_citas')
-    else:
-        form = CitaForm(instance=cita)
-    return render(request, 'cita/actualizar_cita.html', {'form': form, 'cita': cita})
+        paciente_id = request.POST.get('paciente')
+        doctor_id = request.POST.get('doctor')
+        fecha_hora = request.POST.get('fecha_hora')
+        motivo = request.POST.get('motivo')
+        tipo_cita = request.POST.get('tipo_cita')
+        lugar_cita_id = request.POST.get('lugar_cita')
+        duracion_estimada = request.POST.get('duracion_estimada')
+        tipo_servicio = request.POST.get('tipo_servicio')
+        codigo_cita = request.POST.get('codigo_cita')
+        prioridad = request.POST.get('prioridad')
+        notas_adicionales = request.POST.get('notas_adicionales')
+
+        cita.paciente = get_object_or_404(Paciente, id=paciente_id)
+        cita.doctor = get_object_or_404(Doctor, id=doctor_id)
+        cita.fecha_hora = fecha_hora
+        cita.motivo = motivo
+        cita.tipo_cita = tipo_cita
+        if lugar_cita_id:
+            cita.lugar_cita = get_object_or_404(Sala, id=lugar_cita_id)
+        else:
+            cita.lugar_cita = None
+        cita.duracion_estimada = duracion_estimada
+        cita.tipo_servicio = tipo_servicio
+        cita.codigo_cita = codigo_cita
+        cita.prioridad = prioridad
+        cita.notas_adicionales = notas_adicionales
+        
+        cita.save()
+        return redirect('ver_citas')
+
+    pacientes = Paciente.objects.all()
+    doctores = Doctor.objects.all()
+    salas = Sala.objects.all()
+    
+    return render(request, 'cita/actualizar_cita.html', {
+        'cita': cita,
+        'pacientes': pacientes,
+        'doctores': doctores,
+        'salas': salas
+    })
 
 @csrf_protect
 def borrar_cita(request, cita_id):
@@ -150,12 +176,8 @@ def ver_salas(request):
     salas = Sala.objects.all()
     return render(request, 'sala/ver_salas.html', {'salas': salas})
 
+@ensure_csrf_cookie
 def actualizar_sala(request, sala_id):
-    sala = get_object_or_404(Sala, id=sala_id)
-    form = SalaForm(instance=sala)
-    return render(request, 'sala/actualizar_sala.html', {'form': form, 'sala': sala})
-
-def realizar_actualizacion_sala(request, sala_id):
     sala = get_object_or_404(Sala, id=sala_id)
     if request.method == 'POST':
         form = SalaForm(request.POST, instance=sala)
@@ -189,12 +211,8 @@ def ver_historiales(request):
     historiales = HistorialMedico.objects.all()
     return render(request, 'historial/ver_historiales.html', {'historiales': historiales})
 
+@ensure_csrf_cookie
 def actualizar_historial(request, historial_id):
-    historial = get_object_or_404(HistorialMedico, id=historial_id)
-    form = HistorialMedicoForm(instance=historial)
-    return render(request, 'historial/actualizar_historial.html', {'form': form, 'historial': historial})
-
-def realizar_actualizacion_historial(request, historial_id):
     historial = get_object_or_404(HistorialMedico, id=historial_id)
     if request.method == 'POST':
         form = HistorialMedicoForm(request.POST, instance=historial)
@@ -228,12 +246,8 @@ def ver_recetas(request):
     recetas = Receta.objects.all()
     return render(request, 'receta/ver_recetas.html', {'recetas': recetas})
 
+@ensure_csrf_cookie
 def actualizar_receta(request, receta_id):
-    receta = get_object_or_404(Receta, id=receta_id)
-    form = RecetaForm(instance=receta)
-    return render(request, 'receta/actualizar_receta.html', {'form': form, 'receta': receta})
-
-def realizar_actualizacion_receta(request, receta_id):
     receta = get_object_or_404(Receta, id=receta_id)
     if request.method == 'POST':
         form = RecetaForm(request.POST, instance=receta)
@@ -267,12 +281,8 @@ def ver_facturas(request):
     facturas = Factura.objects.all()
     return render(request, 'factura/ver_facturas.html', {'facturas': facturas})
 
+@ensure_csrf_cookie
 def actualizar_factura(request, factura_id):
-    factura = get_object_or_404(Factura, id=factura_id)
-    form = FacturaForm(instance=factura)
-    return render(request, 'factura/actualizar_factura.html', {'form': form, 'factura': factura})
-
-def realizar_actualizacion_factura(request, factura_id):
     factura = get_object_or_404(Factura, id=factura_id)
     if request.method == 'POST':
         form = FacturaForm(request.POST, instance=factura)

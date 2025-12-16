@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['9000-firebase-hospitalaria-1764667357315.cluster-lr6dwlc2lzbcctqhqorax5zmro.cloudworkstations.dev', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://9000-firebase-hospitalaria-1764667357315.cluster-lr6dwlc2lzbcctqhqorax5zmro.cloudworkstations.dev']
+CSRF_TRUSTED_ORIGINS = ['https://*.cloudworkstations.dev']
 
 
 # Application definition

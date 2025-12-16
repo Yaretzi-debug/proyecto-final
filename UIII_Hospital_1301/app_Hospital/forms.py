@@ -4,7 +4,7 @@ from .models import HistorialMedico, Receta, Factura, Cita, Sala
 class CitaForm(forms.ModelForm):
     lugar_cita = forms.ModelChoiceField(queryset=Sala.objects.all(), label="Lugar de la Cita")
     fecha_hora = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        widget=forms.DateTimeInput(format='%Y-%m-%dT%H:%M', attrs={'type': 'datetime-local'}),
         label="Fecha y Hora"
     )
     class Meta:
